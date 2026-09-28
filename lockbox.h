@@ -1,15 +1,20 @@
 /*
  * lockbox.h
- * Shared sizes and names.
+ * CS 375 — lockbox
+ *
+ * Author: Kevin Tieu
+ *
+ * Sizes and names shared by every .c file.
+ * Include this before using PATH_BUFFER_SIZE or the vault folder name.
  */
 
 #ifndef LOCKBOX_H
 #define LOCKBOX_H
 
-#define DEFAULT_VAULT_DIR "vault"
-#define COPY_BUFFER_SIZE 4096
-#define PATH_BUFFER_SIZE 512
-#define NAME_BUFFER_SIZE 256
-#define LINE_BUFFER_SIZE 256
+#define DEFAULT_VAULT_DIR "vault"  /* folder used when LOCKBOX_DIR is not set */
+#define COPY_BUFFER_SIZE 4096  /* bytes copied in each read/write step */
+#define PATH_BUFFER_SIZE 512  /* size of a full path string */
+#define NAME_BUFFER_SIZE 256  /* size of a stored file name */
+#define LINE_BUFFER_SIZE 256  /* size of one input line */
 
 #endif
