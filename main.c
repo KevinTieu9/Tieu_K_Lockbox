@@ -9,6 +9,7 @@
  */
 
 #include "lockbox.h"
+#include "env.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -23,11 +24,10 @@
  */
 int main(int argument_count, char *argument_list[])
 {
-    printf("lockbox\n");
     if (argument_count < 2) {
-        fprintf(stderr, "usage: %s help\n", argument_list[0]);
+        fprintf(stderr, "usage: %s <command>\n", argument_list[0]);
         return 1;
     }
-    printf("command word: %s\n", argument_list[1]);
+    printf("command: %s\n", argument_list[1]);
     return 0;
 }
