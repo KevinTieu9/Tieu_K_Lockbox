@@ -4,7 +4,7 @@
  *
  * Author: Kevin Tieu
  *
- * getenv, umask, and the -d folder override
+ * getenv, umask, and the -d folder override (BLP Chapter 4).
  */
 
 #include "env.h"
@@ -30,3 +30,14 @@ const char *vault_directory(void)
     }
     return DEFAULT_VAULT_DIR;
 }
+
+/*
+ * apply_start_settings
+ * Set umask so new files are not group/world writable
+ * unless we pass an explicit mode to open or mkdir.
+ */
+void apply_start_settings(void)
+{
+    umask(077);
+}
+

@@ -24,6 +24,7 @@
  */
 int main(int argument_count, char *argument_list[])
 {
+    apply_start_settings();
     if (argument_count < 2) {
         fprintf(stderr, "usage: %s <command>\n", argument_list[0]);
         return 1;

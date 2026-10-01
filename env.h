@@ -18,5 +18,12 @@
  * return pointer to that folder name
  */
 const char *vault_directory(void);
+/*
+ * apply_start_settings
+ * Set umask so new files are not group/world writable
+ * unless we pass an explicit mode to open or mkdir.
+ */
+void apply_start_settings(void);
 
 #endif
+
