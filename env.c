@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
+static const char *override_directory = NULL;
+
 /*
  * vault_directory
  * Pick the folder that holds stored files.
@@ -23,6 +25,10 @@
 const char *vault_directory(void)
 {
     const char *from_environment;
+
+    if (override_directory != NULL && override_directory[0] != '\0') {
+        return override_directory;
+    }
 
     from_environment = getenv("LOCKBOX_DIR");
     if (from_environment != NULL && from_environment[0] != '\0') {
@@ -41,3 +47,13 @@ void apply_start_settings(void)
     umask(077);
 }
 
+/*
+ * set_vault_directory
+ * Remember a folder from the -d switch for this run.
+ *
+ * folder - path typed after -d
+ */
+void set_vault_directory(const char *folder)
+{
+    override_directory = folder;
+}

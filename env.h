@@ -24,6 +24,13 @@ const char *vault_directory(void);
  * unless we pass an explicit mode to open or mkdir.
  */
 void apply_start_settings(void);
+/*
+ * set_vault_directory
+ * Remember a folder from the -d switch for this run.
+ *
+ * folder - path typed after -d
+ */
+void set_vault_directory(const char *folder);
 
 #endif
 
