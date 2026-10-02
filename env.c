@@ -4,9 +4,8 @@
  *
  * Author: Kevin Tieu
  *
- * getenv, umask, and the -d folder override (BLP Chapter 4).
- */
-
+ * getenv, umask, and the -d folder override.
+*/
 #include "env.h"
 #include "lockbox.h"
 
