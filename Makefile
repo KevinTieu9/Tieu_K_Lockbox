@@ -5,8 +5,8 @@ BIN = lockbox
 
 all: $(BIN)
 
-$(BIN): main.c env.c
-	$(CC) $(CFLAGS) -o $(BIN) main.c env.c
+$(BIN): main.c env.c vault.c
+	$(CC) $(CFLAGS) -o $(BIN) main.c env.c vault.c
 
 clean:
 	rm -f $(BIN)

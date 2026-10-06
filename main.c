@@ -12,6 +12,7 @@
 
 #include "lockbox.h"
 #include "env.h"
+#include "vault.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -47,6 +48,9 @@ int main(int argument_count, char *argument_list[])
     first_command_index = optind;
     if (first_command_index >= argument_count) {
         fprintf(stderr, "usage: %s <command>\n", argument_list[0]);
+        return 1;
+    }
+    if (ensure_vault() != 0) {
         return 1;
     }
     printf("command: %s\n", argument_list[first_command_index]);
