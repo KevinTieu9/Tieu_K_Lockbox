@@ -37,5 +37,23 @@ int name_is_safe(const char *stored_name);
  * path - path the user typed
  */
 const char *base_name(const char *path);
+/*
+ * make_vault_path
+ * Build the full path of one stored file.
+ *
+ * path_buffer - caller array
+ * path_size   - size of that array
+ * stored_name - plain file name, no slashes
+ * return 0 if it worked, 1 if the name is bad or the path is too long
+ */
+int make_vault_path(char *path_buffer, size_t path_size,
+                    const char *stored_name);
+/*
+ * make_log_path
+ * Build the path of vault/lockbox.log.
+ *
+ * return 0 if it worked, 1 if the path is too long
+ */
+int make_log_path(char *path_buffer, size_t path_size);
 
 #endif

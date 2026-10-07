@@ -77,3 +77,57 @@ const char *base_name(const char *path)
     }
     return slash + 1;
 }
+
+/*
+ * join_vault_file
+ * Write vault_directory()/file_name into path_buffer.
+ *
+ * path_buffer - caller array
+ * path_size   - size of that array
+ * file_name   - name to put after the slash
+ * return 0 if it worked, 1 if the path is too long
+ */
+static int join_vault_file(char *path_buffer, size_t path_size,
+                           const char *file_name)
+{
+    int written;
+
+    written = snprintf(path_buffer, path_size, "%s/%s",
+                       vault_directory(), file_name);
+    if (written < 0 || (size_t)written >= path_size) {
+        fprintf(stderr, "path too long\n");
+        return 1;
+    }
+    return 0;
+}
+
+/*
+ * make_vault_path
+ * Build the full path of one stored file.
+ *
+ * path_buffer - caller array
+ * path_size   - size of that array
+ * stored_name - plain file name, no slashes
+ * return 0 if it worked, 1 if the name is bad or the path is too long
+ */
+int make_vault_path(char *path_buffer, size_t path_size,
+                    const char *stored_name)
+{
+    if (!name_is_safe(stored_name)) {
+        fprintf(stderr, "bad name: %s\n",
+                stored_name != NULL ? stored_name : "(null)");
+        return 1;
+    }
+    return join_vault_file(path_buffer, path_size, stored_name);
+}
+
+/*
+ * make_log_path
+ * Build the path of vault/lockbox.log.
+ *
+ * return 0 if it worked, 1 if the path is too long
+ */
+int make_log_path(char *path_buffer, size_t path_size)
+{
+    return join_vault_file(path_buffer, path_size, LOG_FILE_NAME);
+}

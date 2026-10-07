@@ -16,5 +16,7 @@
 #define PATH_BUFFER_SIZE 512  /* size of a full path string */
 #define NAME_BUFFER_SIZE 256  /* size of a stored file name */
 #define LINE_BUFFER_SIZE 256  /* size of one input line */
+#define LOG_FILE_NAME "lockbox.log"  /* text log inside the vault */
+#define LOG_LINE_SIZE 640  /* size of one log line */
 
 #endif
