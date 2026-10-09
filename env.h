@@ -32,4 +32,3 @@ void apply_start_settings(void);
 void set_vault_directory(const char *folder);
 
 #endif
-

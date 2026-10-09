@@ -13,6 +13,7 @@
 #include "lockbox.h"
 #include "env.h"
 #include "vault.h"
+#include "commands.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -40,19 +41,21 @@ int main(int argument_count, char *argument_list[])
         if (option_letter == 'd') {
             set_vault_directory(optarg);
         } else {
-            fprintf(stderr, "usage: %s -d DIR <command>\n", argument_list[0]);
+            print_usage(argument_list[0]);
             return 1;
         }
         option_letter = getopt(argument_count, argument_list, "d:");
     }
     first_command_index = optind;
     if (first_command_index >= argument_count) {
-        fprintf(stderr, "usage: %s <command>\n", argument_list[0]);
+        print_usage(argument_list[0]);
         return 1;
     }
     if (ensure_vault() != 0) {
         return 1;
     }
-    printf("command: %s\n", argument_list[first_command_index]);
-    return 0;
+    fprintf(stderr, "unknown command: %s\n",
+            argument_list[first_command_index]);
+    print_usage(argument_list[0]);
+    return 1;
 }
