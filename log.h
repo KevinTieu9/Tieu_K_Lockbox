@@ -13,7 +13,7 @@
 /*
  * log_action
  * Append one line to vault/lockbox.log.
- * "a" keeps old lines. A failed log write does not undo the command.
+ * A failed log write does not undo the command.
  *
  * message - text to store
  */

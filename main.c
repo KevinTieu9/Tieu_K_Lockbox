@@ -24,7 +24,7 @@
  * Start the program. Read the command line and run one command.
  *
  * argument_count - how many words are on the command line
- * argument_list - those words. argument_list[0] is the program name
+ * argument_list  - those words. argument_list[0] is the program name
  * return 0 if it worked, 1 if it failed
  */
 int main(int argument_count, char *argument_list[])

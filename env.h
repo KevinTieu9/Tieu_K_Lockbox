@@ -13,15 +13,14 @@
 /*
  * vault_directory
  * Pick the folder that holds stored files.
- * LOCKBOX_DIR wins if it is set. Otherwise use DEFAULT_VAULT_DIR.
- *
+ * LOCKBOX_DIR wins if it is set, unless -d was used.
  * return pointer to that folder name
  */
 const char *vault_directory(void);
 /*
  * apply_start_settings
- * Set umask so new files are not group/world writable
- * unless we pass an explicit mode to open or mkdir.
+ * Set umask so new files are not group or world writable
+ * unless we pass a mode to open or mkdir.
  */
 void apply_start_settings(void);
 /*

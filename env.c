@@ -16,8 +16,8 @@ static const char *override_directory = NULL;
 
 /*
  * vault_directory
- * Pick the folder that holds stored files.
- * LOCKBOX_DIR wins if it is set. Otherwise use DEFAULT_VAULT_DIR.
+ * Use the -d folder if it was set. Otherwise use LOCKBOX_DIR.
+ * If neither is set, use the default vault folder.
  *
  * return pointer to that folder name
  */
@@ -28,7 +28,6 @@ const char *vault_directory(void)
     if (override_directory != NULL && override_directory[0] != '\0') {
         return override_directory;
     }
-
     from_environment = getenv("LOCKBOX_DIR");
     if (from_environment != NULL && from_environment[0] != '\0') {
         return from_environment;
@@ -38,8 +37,8 @@ const char *vault_directory(void)
 
 /*
  * apply_start_settings
- * Set umask so new files are not group/world writable
- * unless we pass an explicit mode to open or mkdir.
+ * Set umask so new files are not group or world writable
+ * unless we pass a mode to open or mkdir.
  */
 void apply_start_settings(void)
 {

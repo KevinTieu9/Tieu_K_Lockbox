@@ -20,6 +20,7 @@
  * return 0 if it worked, 1 if mkdir failed
  */
 int ensure_vault(void);
+
 /*
  * name_is_safe
  * A stored name must stay inside the vault folder.

@@ -60,7 +60,6 @@ int name_is_safe(const char *stored_name)
 /*
  * base_name
  * Return the part after the last slash.
- * put /tmp/notes.txt should store notes.txt, not the whole path.
  *
  * path - path the user typed
  */
@@ -78,15 +77,6 @@ const char *base_name(const char *path)
     return slash + 1;
 }
 
-/*
- * join_vault_file
- * Write vault_directory()/file_name into path_buffer.
- *
- * path_buffer - caller array
- * path_size   - size of that array
- * file_name   - name to put after the slash
- * return 0 if it worked, 1 if the path is too long
- */
 static int join_vault_file(char *path_buffer, size_t path_size,
                            const char *file_name)
 {
