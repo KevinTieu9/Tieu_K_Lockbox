@@ -16,6 +16,9 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/stat.h>
 
 /*
  * print_usage
@@ -28,4 +31,49 @@ void print_usage(const char *program_name)
     fprintf(stderr, "usage:\n");
     fprintf(stderr, "  %s put <file>\n", program_name);
     fprintf(stderr, "  %s -d DIR <command>\n", program_name);
+}
+
+/*
+ * command_put
+ * Copy source_path into the vault under its base name.
+ * O_EXCL refuses to overwrite a name that is already stored.
+ *
+ * source_path - file the user wants to store
+ * return 0 if it worked, 1 if it failed
+ */
+int command_put(const char *source_path)
+{
+    int input_descriptor;
+    int output_descriptor;
+    char vault_path[PATH_BUFFER_SIZE];
+    const char *stored_name;
+    char log_line[LOG_LINE_SIZE];
+
+    stored_name = base_name(source_path);
+    if (make_vault_path(vault_path, sizeof(vault_path), stored_name) != 0) {
+        return 1;
+    }
+    input_descriptor = open(source_path, O_RDONLY);
+    if (input_descriptor < 0) {
+        perror(source_path);
+        return 1;
+    }
+    output_descriptor = open(vault_path, O_WRONLY | O_CREAT | O_EXCL, 0600);
+    if (output_descriptor < 0) {
+        perror(vault_path);
+        close(input_descriptor);
+        return 1;
+    }
+    if (copy_descriptor(input_descriptor, output_descriptor) != 0) {
+        close(input_descriptor);
+        close(output_descriptor);
+        return 1;
+    }
+    close(input_descriptor);
+    close(output_descriptor);
+    snprintf(log_line, sizeof(log_line), "PUT %s -> %s",
+             source_path, vault_path);
+    log_action(log_line);
+    printf("stored %s\n", vault_path);
+    return 0;
 }
