@@ -30,6 +30,7 @@ void print_usage(const char *program_name)
 {
     fprintf(stderr, "usage:\n");
     fprintf(stderr, "  %s put <file>\n", program_name);
+    fprintf(stderr, "  %s get <name> <outfile>\n", program_name);
     fprintf(stderr, "  %s -d DIR <command>\n", program_name);
 }
 
@@ -75,5 +76,48 @@ int command_put(const char *source_path)
              source_path, vault_path);
     log_action(log_line);
     printf("stored %s\n", vault_path);
+    return 0;
+}
+
+/*
+ * command_get
+ * Copy a stored file out to output_path.
+ *
+ * stored_name - name inside the vault
+ * output_path - file to write on the outside
+ * return 0 if it worked, 1 if it failed
+ */
+int command_get(const char *stored_name, const char *output_path)
+{
+    int input_descriptor;
+    int output_descriptor;
+    char vault_path[PATH_BUFFER_SIZE];
+    char log_line[LOG_LINE_SIZE];
+
+    if (make_vault_path(vault_path, sizeof(vault_path), stored_name) != 0) {
+        return 1;
+    }
+    input_descriptor = open(vault_path, O_RDONLY);
+    if (input_descriptor < 0) {
+        perror(vault_path);
+        return 1;
+    }
+    output_descriptor = open(output_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (output_descriptor < 0) {
+        perror(output_path);
+        close(input_descriptor);
+        return 1;
+    }
+    if (copy_descriptor(input_descriptor, output_descriptor) != 0) {
+        close(input_descriptor);
+        close(output_descriptor);
+        return 1;
+    }
+    close(input_descriptor);
+    close(output_descriptor);
+    snprintf(log_line, sizeof(log_line), "GET %s -> %s",
+             stored_name, output_path);
+    log_action(log_line);
+    printf("wrote %s\n", output_path);
     return 0;
 }

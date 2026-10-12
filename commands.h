@@ -27,4 +27,14 @@ void print_usage(const char *program_name);
  */
 int command_put(const char *source_path);
 
+/*
+ * command_get
+ * Copy a stored file out to output_path.
+ *
+ * stored_name - name inside the vault
+ * output_path - file to write on the outside
+ * return 0 if it worked, 1 if it failed
+ */
+int command_get(const char *stored_name, const char *output_path);
+
 #endif

@@ -54,6 +54,13 @@ int main(int argument_count, char *argument_list[])
     if (ensure_vault() != 0) {
         return 1;
     }
+    if (strcmp(argument_list[first_command_index], "put") == 0) {
+        if (first_command_index + 1 >= argument_count) {
+            print_usage(argument_list[0]);
+            return 1;
+        }
+        return command_put(argument_list[first_command_index + 1]);
+    }
     fprintf(stderr, "unknown command: %s\n",
             argument_list[first_command_index]);
     print_usage(argument_list[0]);
