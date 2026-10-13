@@ -61,6 +61,14 @@ int main(int argument_count, char *argument_list[])
         }
         return command_put(argument_list[first_command_index + 1]);
     }
+    if (strcmp(argument_list[first_command_index], "get") == 0) {
+        if (first_command_index + 2 >= argument_count) {
+            print_usage(argument_list[0]);
+            return 1;
+        }
+        return command_get(argument_list[first_command_index + 1],
+                           argument_list[first_command_index + 2]);
+    }
     fprintf(stderr, "unknown command: %s\n",
             argument_list[first_command_index]);
     print_usage(argument_list[0]);

@@ -19,6 +19,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <dirent.h>
 
 /*
  * print_usage
@@ -31,6 +32,7 @@ void print_usage(const char *program_name)
     fprintf(stderr, "usage:\n");
     fprintf(stderr, "  %s put <file>\n", program_name);
     fprintf(stderr, "  %s get <name> <outfile>\n", program_name);
+    fprintf(stderr, "  %s list\n", program_name);
     fprintf(stderr, "  %s -d DIR <command>\n", program_name);
 }
 
@@ -119,5 +121,37 @@ int command_get(const char *stored_name, const char *output_path)
              stored_name, output_path);
     log_action(log_line);
     printf("wrote %s\n", output_path);
+    return 0;
+}
+
+/*
+ * command_list
+ * Walk the vault folder with opendir and readdir.
+ *
+ * return 0 if it worked, 1 if the folder would not open
+ */
+int command_list(void)
+{
+    DIR *vault_folder;
+    struct dirent *entry;
+    int file_count;
+
+    vault_folder = opendir(vault_directory());
+    if (vault_folder == NULL) {
+        perror(vault_directory());
+        return 1;
+    }
+    file_count = 0;
+    entry = readdir(vault_folder);
+    while (entry != NULL) {
+        if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
+            printf("%s\n", entry->d_name);
+            file_count = file_count + 1;
+        }
+        entry = readdir(vault_folder);
+    }
+    closedir(vault_folder);
+    log_action("LIST");
+    printf("(%d file%s)\n", file_count, file_count == 1 ? "" : "s");
     return 0;
 }

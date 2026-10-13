@@ -37,4 +37,12 @@ int command_put(const char *source_path);
  */
 int command_get(const char *stored_name, const char *output_path);
 
+/*
+ * command_list
+ * Walk the vault folder and print stored names.
+ *
+ * return 0 if it worked, 1 if the folder would not open
+ */
+int command_list(void);
+
 #endif
