@@ -30,5 +30,11 @@ void apply_start_settings(void);
  * folder - path typed after -d
  */
 void set_vault_directory(const char *folder);
+/*
+ * command_env
+ * Print USER, HOME, LOCKBOX_DIR, and the vault folder in use.
+ * return 0
+ */
+int command_env(void);
 
 #endif

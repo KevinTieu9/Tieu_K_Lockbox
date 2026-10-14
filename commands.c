@@ -33,6 +33,7 @@ void print_usage(const char *program_name)
     fprintf(stderr, "  %s put <file>\n", program_name);
     fprintf(stderr, "  %s get <name> <outfile>\n", program_name);
     fprintf(stderr, "  %s list\n", program_name);
+    fprintf(stderr, "  %s env\n", program_name);
     fprintf(stderr, "  %s -d DIR <command>\n", program_name);
 }
 
@@ -144,7 +145,7 @@ int command_list(void)
     file_count = 0;
     entry = readdir(vault_folder);
     while (entry != NULL) {
-        if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
+        if (!is_bookkeeping_name(entry->d_name)) {
             printf("%s\n", entry->d_name);
             file_count = file_count + 1;
         }
@@ -155,3 +156,4 @@ int command_list(void)
     printf("(%d file%s)\n", file_count, file_count == 1 ? "" : "s");
     return 0;
 }
+

@@ -121,3 +121,24 @@ int make_log_path(char *path_buffer, size_t path_size)
 {
     return join_vault_file(path_buffer, path_size, LOG_FILE_NAME);
 }
+
+/*
+ * is_bookkeeping_name
+ * Helper files live in the vault but are not stored files.
+ *
+ * entry_name - a name from readdir
+ * return 1 if this name should be skipped in the file list
+ */
+int is_bookkeeping_name(const char *entry_name)
+{
+    if (entry_name == NULL) {
+        return 1;
+    }
+    if (strcmp(entry_name, ".") == 0 || strcmp(entry_name, "..") == 0) {
+        return 1;
+    }
+    if (strcmp(entry_name, LOG_FILE_NAME) == 0) {
+        return 1;
+    }
+    return 0;
+}

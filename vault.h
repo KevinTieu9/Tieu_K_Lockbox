@@ -57,4 +57,14 @@ int make_vault_path(char *path_buffer, size_t path_size,
  */
 int make_log_path(char *path_buffer, size_t path_size);
 
+/*
+ * is_bookkeeping_name
+ * The log, index, fifo, and stats files live in the vault folder
+ * but they are not files the user stored with put.
+ *
+ * entry_name - a name from readdir
+ * return 1 if this name should be skipped in the file list
+ */
+int is_bookkeeping_name(const char *entry_name);
+
 #endif

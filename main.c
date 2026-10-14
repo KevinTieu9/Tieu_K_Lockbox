@@ -69,6 +69,12 @@ int main(int argument_count, char *argument_list[])
         return command_get(argument_list[first_command_index + 1],
                            argument_list[first_command_index + 2]);
     }
+    if (strcmp(argument_list[first_command_index], "list") == 0) {
+        return command_list();
+    }
+    if (strcmp(argument_list[first_command_index], "env") == 0) {
+        return command_env();
+    }
     fprintf(stderr, "unknown command: %s\n",
             argument_list[first_command_index]);
     print_usage(argument_list[0]);
