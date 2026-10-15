@@ -18,5 +18,6 @@
 #define LINE_BUFFER_SIZE 256  /* size of one input line */
 #define LOG_FILE_NAME "lockbox.log"  /* text log inside the vault */
 #define LOG_LINE_SIZE 640  /* size of one log line */
+#define SCREEN_MAX_FILES 128  /* names the file list can show */
 
 #endif
