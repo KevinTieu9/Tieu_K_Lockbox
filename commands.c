@@ -13,6 +13,7 @@
 #include "env.h"
 #include "log.h"
 #include "copy.h"
+#include "index.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -34,6 +35,7 @@ void print_usage(const char *program_name)
     fprintf(stderr, "  %s get <name> <outfile>\n", program_name);
     fprintf(stderr, "  %s list\n", program_name);
     fprintf(stderr, "  %s env\n", program_name);
+    fprintf(stderr, "  %s screen\n", program_name);
     fprintf(stderr, "  %s -d DIR <command>\n", program_name);
 }
 
@@ -52,6 +54,7 @@ int command_put(const char *source_path)
     char vault_path[PATH_BUFFER_SIZE];
     const char *stored_name;
     char log_line[LOG_LINE_SIZE];
+    struct stat file_info;
 
     stored_name = base_name(source_path);
     if (make_vault_path(vault_path, sizeof(vault_path), stored_name) != 0) {
@@ -75,6 +78,9 @@ int command_put(const char *source_path)
     }
     close(input_descriptor);
     close(output_descriptor);
+    if (stat(vault_path, &file_info) == 0) {
+        index_record_put(stored_name, (long)file_info.st_size);
+    }
     snprintf(log_line, sizeof(log_line), "PUT %s -> %s",
              source_path, vault_path);
     log_action(log_line);

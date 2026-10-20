@@ -140,5 +140,21 @@ int is_bookkeeping_name(const char *entry_name)
     if (strcmp(entry_name, LOG_FILE_NAME) == 0) {
         return 1;
     }
+    if (strcmp(entry_name, INDEX_FILE_NAME) == 0) {
+        return 1;
+    }
+    if (strcmp(entry_name, INDEX_BIN_NAME) == 0) {
+        return 1;
+    }
     return 0;
+}
+
+int make_index_path(char *path_buffer, size_t path_size)
+{
+    return join_vault_file(path_buffer, path_size, INDEX_FILE_NAME);
+}
+
+int make_index_bin_path(char *path_buffer, size_t path_size)
+{
+    return join_vault_file(path_buffer, path_size, INDEX_BIN_NAME);
 }

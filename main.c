@@ -14,6 +14,7 @@
 #include "env.h"
 #include "vault.h"
 #include "commands.h"
+#include "screen.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -74,6 +75,9 @@ int main(int argument_count, char *argument_list[])
     }
     if (strcmp(argument_list[first_command_index], "env") == 0) {
         return command_env();
+    }
+    if (strcmp(argument_list[first_command_index], "screen") == 0) {
+        return command_screen();
     }
     fprintf(stderr, "unknown command: %s\n",
             argument_list[first_command_index]);

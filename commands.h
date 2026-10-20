@@ -7,42 +7,67 @@
  * put, get, list, and the usage text.
  */
 
-#ifndef COMMANDS_H
-#define COMMANDS_H
+#ifndef VAULT_H
+#define VAULT_H
+
+#include <stddef.h>
 
 /*
- * print_usage
- * How to run this program. Writes to stderr.
+ * ensure_vault
+ * Create the vault folder if it is not there yet.
+ * EEXIST means the folder already exists. That is not an error.
  *
- * program_name - argument_list[0]
+ * return 0 if it worked, 1 if mkdir failed
  */
-void print_usage(const char *program_name);
+int ensure_vault(void);
 
 /*
- * command_put
- * Copy source_path into the vault under its base name.
+ * name_is_safe
+ * A stored name must stay inside the vault folder.
+ * Reject empty names, slashes, "." and "..".
  *
- * source_path - file the user wants to store
- * return 0 if it worked, 1 if it failed
+ * stored_name - name the caller wants to use inside vault/
+ * return 1 if the name is usable, 0 if it is not
  */
-int command_put(const char *source_path);
+int name_is_safe(const char *stored_name);
+/*
+ * base_name
+ * Return the part after the last slash.
+ * put /tmp/notes.txt should store notes.txt, not the whole path.
+ *
+ * path - path the user typed
+ */
+const char *base_name(const char *path);
+/*
+ * make_vault_path
+ * Build the full path of one stored file.
+ *
+ * path_buffer - caller array
+ * path_size   - size of that array
+ * stored_name - plain file name, no slashes
+ * return 0 if it worked, 1 if the name is bad or the path is too long
+ */
+int make_vault_path(char *path_buffer, size_t path_size,
+                    const char *stored_name);
+/*
+ * make_log_path
+ * Build the path of vault/lockbox.log.
+ *
+ * return 0 if it worked, 1 if the path is too long
+ */
+int make_log_path(char *path_buffer, size_t path_size);
 
 /*
- * command_get
- * Copy a stored file out to output_path.
+ * is_bookkeeping_name
+ * The log, index, fifo, and stats files live in the vault folder
+ * but they are not files the user stored with put.
  *
- * stored_name - name inside the vault
- * output_path - file to write on the outside
- * return 0 if it worked, 1 if it failed
+ * entry_name - a name from readdir
+ * return 1 if this name should be skipped in the file list
  */
-int command_get(const char *stored_name, const char *output_path);
+int is_bookkeeping_name(const char *entry_name);
 
-/*
- * command_list
- * Walk the vault folder and print stored names.
- *
- * return 0 if it worked, 1 if the folder would not open
- */
-int command_list(void);
+int make_index_path(char *path_buffer, size_t path_size);
+int make_index_bin_path(char *path_buffer, size_t path_size);
 
 #endif

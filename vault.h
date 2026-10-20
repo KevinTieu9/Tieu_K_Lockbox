@@ -67,4 +67,7 @@ int make_log_path(char *path_buffer, size_t path_size);
  */
 int is_bookkeeping_name(const char *entry_name);
 
+int make_index_path(char *path_buffer, size_t path_size);
+int make_index_bin_path(char *path_buffer, size_t path_size);
+
 #endif
