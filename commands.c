@@ -36,6 +36,7 @@ void print_usage(const char *program_name)
     fprintf(stderr, "  %s list\n", program_name);
     fprintf(stderr, "  %s env\n", program_name);
     fprintf(stderr, "  %s screen\n", program_name);
+    fprintf(stderr, "  %s index\n", program_name);
     fprintf(stderr, "  %s -d DIR <command>\n", program_name);
 }
 

@@ -1,5 +1,5 @@
 # Lockbox
-
+**Course:** Personal Project for CS 375 — Fall 2026
 **Author:** Kevin Tieu
 
 ## Overview

@@ -15,6 +15,8 @@
 #include "vault.h"
 #include "commands.h"
 #include "screen.h"
+#include "index.h"
+#include "process.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -35,6 +37,7 @@ int main(int argument_count, char *argument_list[])
     int first_command_index;
 
     apply_start_settings();
+    install_interrupt_handler();
 
     opterr = 0;
     option_letter = getopt(argument_count, argument_list, "d:");
@@ -78,6 +81,9 @@ int main(int argument_count, char *argument_list[])
     }
     if (strcmp(argument_list[first_command_index], "screen") == 0) {
         return command_screen();
+    }
+    if (strcmp(argument_list[first_command_index], "index") == 0) {
+        return command_index();
     }
     fprintf(stderr, "unknown command: %s\n",
             argument_list[first_command_index]);

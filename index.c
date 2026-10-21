@@ -98,3 +98,33 @@ int index_record_put(const char *stored_name, long file_size)
     close(binary_descriptor);
     return 0;
 }
+
+/*
+ * command_index
+ * Print every binary record.
+ *
+ * return 0
+ */
+int command_index(void)
+{
+    int binary_descriptor;
+    char binary_path[PATH_BUFFER_SIZE];
+    struct vault_record record;
+    ssize_t bytes_read;
+
+    if (make_index_bin_path(binary_path, sizeof(binary_path)) != 0) {
+        return 1;
+    }
+    binary_descriptor = open(binary_path, O_RDONLY);
+    if (binary_descriptor < 0) {
+        printf("no binary index yet\n");
+        return 0;
+    }
+    bytes_read = read(binary_descriptor, &record, sizeof(record));
+    while (bytes_read == (ssize_t)sizeof(record)) {
+        printf("%s %ld\n", record.file_name, record.file_size);
+        bytes_read = read(binary_descriptor, &record, sizeof(record));
+    }
+    close(binary_descriptor);
+    return 0;
+}

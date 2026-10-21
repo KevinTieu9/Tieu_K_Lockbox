@@ -20,4 +20,12 @@
  */
 int index_record_put(const char *stored_name, long file_size);
 
+/*
+ * command_index
+ * Print every binary record.
+ *
+ * return 0
+ */
+int command_index(void);
+
 #endif
