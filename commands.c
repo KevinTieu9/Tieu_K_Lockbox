@@ -37,6 +37,7 @@ void print_usage(const char *program_name)
     fprintf(stderr, "  %s env\n", program_name);
     fprintf(stderr, "  %s screen\n", program_name);
     fprintf(stderr, "  %s index\n", program_name);
+    fprintf(stderr, "  %s status\n", program_name);
     fprintf(stderr, "  %s -d DIR <command>\n", program_name);
 }
 
@@ -163,4 +164,5 @@ int command_list(void)
     printf("(%d file%s)\n", file_count, file_count == 1 ? "" : "s");
     return 0;
 }
+
 

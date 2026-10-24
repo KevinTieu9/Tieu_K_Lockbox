@@ -85,6 +85,9 @@ int main(int argument_count, char *argument_list[])
     if (strcmp(argument_list[first_command_index], "index") == 0) {
         return command_index();
     }
+    if (strcmp(argument_list[first_command_index], "status") == 0) {
+        return command_status();
+    }
     fprintf(stderr, "unknown command: %s\n",
             argument_list[first_command_index]);
     print_usage(argument_list[0]);

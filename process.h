@@ -1,5 +1,5 @@
 /*
- * process.h
+ *process.h
  * CS 375 — lockbox
  *
  * Author: Kevin Tieu
@@ -10,5 +10,6 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 void install_interrupt_handler(void);
+int command_status(void);
 
 #endif
